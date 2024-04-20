@@ -29,7 +29,7 @@ public final class BlogPage extends BasePage {
 
     public BlogPage assertBlogPageIsOpenCheckFilterList(){
         List<String> namesBlogFilterList = blogFilterList.stream().map(WebElement :: getText).collect(Collectors.toList());
-        List<String> actualResult = Arrays.asList ("Guides","News", "Tech", "Updates", "Trends");
+        List<String> actualResult = Arrays.asList ("Tech", "Updates","Guides","News", "Trends");
         Assert.assertEquals(namesBlogFilterList, actualResult);
         namesBlogFilterList.forEach(System.out::println);
         return this;

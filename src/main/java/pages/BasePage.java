@@ -6,8 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BasePage   {
     static WebDriver driver = Driver.getDriver();
+    public static BlogPage blogPage = pages.BlogPage.getBlogPage();
 
     @FindBy(id = "nav-icon") static WebElement hamburger;
 
@@ -18,7 +22,19 @@ public abstract class BasePage   {
             throw new RuntimeException(e);
         }
     }
+    public static <T extends BasePage> T openHeaderMenuItem(HeaderMenuItems headerMenuItems){
+        List<String> list = new ArrayList<>();
+        driver.findElement(By.xpath("//a//div | //span[text()='"+headerMenuItems.toString()+"']")).click();
+        pause(10000);
+            switch (headerMenuItems){
+                case Blog: return (T) blogPage;
+                case Home: return (T) HomePage.getHomePage();
+                default: throw new IllegalArgumentException("BasePage openHeaderMenuItem legal argument");
+            }
 
+
+        //return null;
+    }
     public BasePage navigationHamburgerMenu(String page){
         if(hamburger.isDisplayed())
             hamburger.click();
